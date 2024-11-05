@@ -69,8 +69,10 @@ public class SecurityConfig {
         http.cors(cors -> {
             CorsConfiguration config = new CorsConfiguration();
             config.setAllowCredentials(true); // 쿠키 전송 허용
-            config.addAllowedOrigin("https://myspringserver.shop"); // 백엔드 도메인
-            config.addAllowedOrigin("https://localhost:3000"); // 프론트엔드 도메인
+            config.addAllowedOrigin("https://myspringserver.shop");
+            config.addAllowedOrigin("https://localhost:3000");
+            config.addAllowedOrigin("http://localhost:3000");
+            config.addAllowedOrigin("http://localhost:8080"); // 도메인 모두 허용
             config.addAllowedHeader("*");
             config.addAllowedMethod("*");
             config.setExposedHeaders(List.of("Authorization", "accessToken")); // 클라이언트에서 접근할 수 있도록 노출할 헤더
