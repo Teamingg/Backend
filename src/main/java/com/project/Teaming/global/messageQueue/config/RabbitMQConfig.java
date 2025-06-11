@@ -16,6 +16,9 @@ public class RabbitMQConfig {
 
     @Value("${server.id}") // application.yml에서 설정된 SERVER_ID 값을 주입
     private String serverId;
+
+    @Value("${spring.rabbitmq.host}")
+    private String rabbitHost;
     @Bean
     public Queue queue() {
         return QueueBuilder.durable(serverId)
@@ -65,9 +68,9 @@ public class RabbitMQConfig {
 
     @Bean
     public CachingConnectionFactory cachingConnectionFactory() {
-        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory("localhost");
-        cachingConnectionFactory.setUsername("guest");
-        cachingConnectionFactory.setPassword("guest");
+        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(rabbitHost);
+        cachingConnectionFactory.setUsername("admin");
+        cachingConnectionFactory.setPassword("password");
         cachingConnectionFactory.setChannelCacheSize(50);
         cachingConnectionFactory.setCacheMode(CachingConnectionFactory.CacheMode.CHANNEL);
         return cachingConnectionFactory;
