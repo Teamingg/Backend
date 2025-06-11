@@ -70,10 +70,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
-            docker compose -f /home/compose/docker-compose.yml down
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/teaming-server:latest
-            docker compose -f /home/compose/docker-compose.yml up -d
+            docker compose -f /home/compose/docker-compose.yml up -d --pull always --force-recreate
 
       - name: SSH로 EC2_2에 접속하기
         uses: appleboy/ssh-action@v1.0.3
@@ -83,7 +81,5 @@ jobs:
           key: ${{ secrets.EC2_2_PRIVATE_KEY }}
           script_stop: true
           script: |
-            docker compose -f /home/compose/docker-compose.yml down
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/teaming-server:latest
-            docker compose -f /home/compose/docker-compose.yml up -d
+            docker compose -f /home/compose/docker-compose.yml up -d --pull always --force-recreate
