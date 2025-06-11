@@ -14,4 +14,10 @@ public class TestController {
     public String home() {
         return "Hello Teaming";
     }
+
+    @GetMapping("/health")
+    @Operation(summary = "헬스체크 컨트롤러")
+    public String health() {
+        return "OK";
+    }
 }
