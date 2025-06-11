@@ -75,6 +75,14 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/teaming-server:latest
             docker compose -f /home/compose/docker-compose.yml up -d
 
+      - name: EC2_1 헬스체크 완료될 때까지 대기
+        run: |
+          echo " EC2-1 서버 기동 대기 중..."
+          until curl -fs http://${{ secrets.EC2_PUBLIC_IP }}:8080/health; do
+          sleep 1
+          done
+          echo " EC2-1 서버 정상 기동됨"
+
       - name: SSH로 EC2_2에 접속하기
         uses: appleboy/ssh-action@v1.0.3
         with:
