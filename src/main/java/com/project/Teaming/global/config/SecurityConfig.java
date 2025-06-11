@@ -56,7 +56,7 @@ public class SecurityConfig {
                         .requestMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**", "/login",
                                 "/project/teams/{teamId}/status", "/project/posts",
                                 "/mentoring/posts","/mentoring/teams/{teamId}","/mentoring/posts/{postId}",
-                                "/users/{userId}/project","users/{userId}/mentoring/teams").permitAll() // 특정 경로 허용
+                                "/users/{userId}/project","/users/{userId}/mentoring/teams","/health").permitAll() // 특정 경로 허용
                         .requestMatchers(HttpMethod.GET, "/project/teams/{teamId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/project/posts/{postId}").permitAll()
                         .anyRequest().authenticated() // 그 외 모든 요청 인증 필요
