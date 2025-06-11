@@ -37,7 +37,7 @@ public class RabbitMQNotificationConsumer {
     @Transactional(readOnly = true)
     @RabbitListener(queues = {"${server.id}"},
             containerFactory = "rabbitListenerContainerFactory")
-    public void receiveNotification(NotificationEvent event, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
+    public void receiveNotification(NotificationEvent event, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
 
         try {
             List<Notification> notifications = notificationRepository.findAllById(event.getNotificationIds());
@@ -55,12 +55,8 @@ public class RabbitMQNotificationConsumer {
             });
             channel.basicAck(tag, false);
         } catch (Exception e) {
-            try {
-                channel.basicAck(tag, false); // ❌ 예외 발생해도 재시도 안 하므로 ACK
-            } catch (IOException ioException) {
-                log.error("❌ RabbitMQ basicAck 실패: {}", ioException.getMessage(), ioException);
-            }
-            log.error("❌ RabbitMQ 알림 이벤트 처리 실패: {}", e.getMessage(), e);
+            channel.basicNack(tag, false,false);
+            log.error("DLQ로 메세지 이동됨: {}", e.getMessage(), e);
         }
     }
 
