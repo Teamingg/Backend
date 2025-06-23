@@ -19,6 +19,7 @@ public class CorsConfig {
         config.addAllowedOrigin("https://myspringserver.shop");
         config.addAllowedOrigin("https://localhost:3000");
         config.addAllowedOrigin("https://front.myspringserver.shop:3000");
+        config.addAllowedOrigin("https://teamingfrontend.vercel.app");
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:8080"); // 도메인 모두 허용
         config.addAllowedHeader("*");
